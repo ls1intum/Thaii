@@ -1,0 +1,89 @@
+.main.container {
+    margin-left: 2rem;
+    margin-top: 3rem;
+    margin-right: 2rem;
+    margin-bottom: 5vh;
+}
+
+.main.tabs {
+    background-color: #f5f5f5;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    border-radius: 3;
+}
+
+.main.tabs:hover { 
+    cursor: pointer;
+}
+
+.filter.pages {
+    width: 15vw;
+}
+
+.filter.button {
+    background-color: #f5f5f5;
+    border: 0;
+    text-transform: 0;
+    outline: none;
+}
+
+.filter.button:hover {
+    background-color: #d3d3d3; 
+    border: 0
+}
+
+.autocomplete.button {
+    background-color: #f5f5f5;
+    border: 0;
+    height: 4vh;
+    text-transform: 0;
+    outline: none;
+    margin: 0.5rem;
+}
+
+.autocomplete.button:hover {
+    background-color: #d3d3d3; 
+    border: 0
+}
+
+.dashboard.container {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 2rem;
+}
+
+.dashboard.tile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 13vh;
+    border: 1px solid #f5f5f5
+}
+
+.tile.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tile.line {
+    display: flex;
+    justify-content: flex-start;
+    height: 35vh;
+    border: 1px solid #f5f5f5;
+    padding-top: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+.line.title {
+    height: 4vh;
+}
+
+.line.container {
+    height: 26vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

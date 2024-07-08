@@ -1,0 +1,100 @@
+services:
+  traefik:
+    restart: always
+    image: "traefik:latest"
+    command:
+      - --log.level=ERROR
+      - --providers.docker=true
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.network=web
+      - --certificatesResolvers.myresolver.acme.email=ge63kin@mytum.de
+      - --certificatesResolvers.myresolver.acme.storage=/letsencrypt/acme.json
+      - --certificatesResolvers.myresolver.acme.httpChallenge.entryPoint=web
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - traefik_certificates:/letsencrypt
+    networks:
+      - web
+
+  backend:
+    container_name: server
+    hostname: server
+    image: gitlab.lrz.de:5005/davidmang/ma-mang:ma-mang.server
+    build:
+      context: .
+      dockerfile: docker/server/Dockerfile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`ma-mang.ase.cit.tum.de`) && PathPrefix(`/api`)"
+      - "traefik.http.services.backend-service.loadbalancer.server.port=8000"
+      - "traefik.http.routers.backend.service=backend-service"
+      - "traefik.http.routers.backend.tls=true"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.backend.tls.certresolver=myresolver"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - web
+      - backend
+    expose:
+      - "8000"
+    volumes:
+      - templates:/server/templates
+  
+  db:
+    container_name: db
+    image: postgres:16-alpine
+    env_file:
+      - .env
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  client:
+    container_name: client
+    hostname: client
+    image: gitlab.lrz.de:5005/davidmang/ma-mang:ma-mang.client
+    build: 
+      context: .
+      dockerfile: docker/client/Dockerfile
+      args:
+        VITE_API_URL: "https://ma-mang.ase.cit.tum.de"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.client.rule=Host(`ma-mang.ase.cit.tum.de`)"
+      - "traefik.http.services.client-service.loadbalancer.server.port=3000"
+      - "traefik.http.routers.client.service=client-service"      
+      - "traefik.http.routers.client.tls=true"
+      - "traefik.http.routers.client.entrypoints=websecure"
+      - "traefik.http.routers.client.tls.certresolver=myresolver"
+    volumes:
+      - node_modules:/client/node_modules
+    depends_on:
+      - backend
+    networks:
+      - web
+    expose:
+      - "3000"
+
+networks:
+  web:
+    external: true
+    driver: bridge
+  backend:
+    external: false
+    driver: bridge
+    
+volumes:
+  db-data:
+  node_modules:
+  templates:
+  traefik_certificates:

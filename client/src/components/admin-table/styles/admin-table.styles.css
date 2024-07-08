@@ -1,0 +1,16 @@
+.whitelist-add-button {
+    width: 2rem;
+    border:  none !important;
+    outline: none !important;
+    text-transform: none;
+}
+
+.whitelist-add-textfield {
+    width: 30vw;
+    border: solid 1px #f3f3f3;
+}
+
+.user-grid-buttons {
+    border:  none !important;
+    outline: none !important;
+}

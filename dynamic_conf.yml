@@ -1,0 +1,4 @@
+tls:
+  certificates:
+    - certFile: /certificates/host:f:asevm77.cit.tum.de.cert.pem
+      keyFile: /certificates/host:f:asevm77.cit.tum.de.privkey.pem

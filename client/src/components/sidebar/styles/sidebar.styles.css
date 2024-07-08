@@ -1,0 +1,25 @@
+:root {
+    --sidebar-color: #d3d3d3;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 96vh;
+    width: 14vw;
+    background: #FCFCFC;
+    border-right: solid 1px #D6D6D6;
+    transition: all 0.5s;
+}
+
+.sidebar.close {
+    width: 4vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 96vh;
+    background: #FCFCFC;
+    border-right: solid 1px #D6D6D6;
+    transition: all 0.5s;
+}

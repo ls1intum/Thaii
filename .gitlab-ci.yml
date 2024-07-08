@@ -1,0 +1,66 @@
+stages:
+  - build
+  - deploy
+
+default:
+  image: docker:24.0.5
+  services:
+    - name: docker:24.0.5-dind
+      alias: docker
+
+variables:
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_HOST: tcp://docker:2375
+
+before_script:
+  - echo "Checking Docker service availability"
+  - apk add --no-cache docker-compose
+  - ping -c 3 docker || (echo "Docker service not reachable" && exit 1)
+  - |
+    echo "OPENAI_API_KEY=$OPENAI_API_KEY" >> .env
+    echo "DEBUG=$DEBUG" >> .env
+    echo "SECRET_KEY=$SECRET_KEY" >> .env
+    echo "POSTGRES_DB=$POSTGRES_DB" >> .env
+    echo "POSTGRES_USER=$POSTGRES_USER" >> .env
+    echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" >> .env
+    echo "POSTGRES_HOST=$POSTGRES_HOST" >> .env
+    echo "EMAIL_USE_TLS=$EMAIL_USE_TLS" >> .env
+    echo "EMAIL_HOST=$EMAIL_HOST" >> .env
+    echo "EMAIL_HOST_USER=$EMAIL_HOST_USER" >> .env
+    echo "EMAIL_HOST_PASSWORD=$EMAIL_HOST_PASSWORD" >> .env
+    echo "DEFAULT_FROM_EMAIL=$DEFAULT_FROM_EMAIL" >> .env
+    echo "EMAIL_PORT=$EMAIL_PORT" >> .env
+    echo "DJANGO_SUPERUSER_USERNAME=$DJANGO_SUPERUSER_USERNAME" >> .env
+    echo "DJANGO_SUPERUSER_PASSWORD=$DJANGO_SUPERUSER_PASSWORD" >> .env
+    echo "DJANGO_SUPERUSER_EMAIL=$DJANGO_SUPERUSER_EMAIL" >> .env
+
+build:
+  stage: build
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker compose build
+    - docker push gitlab.lrz.de:5005/davidmang/ma-mang:ma-mang.client
+    - docker push gitlab.lrz.de:5005/davidmang/ma-mang:ma-mang.server
+  tags:
+    - docker
+ 
+deploy:
+  stage: deploy
+  script:
+    - chmod og= $SSH_KEY
+    - apk update && apk add openssh-client
+    - echo "$SERVER_USER@$SERVER_DOMAIN"
+    - ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_DOMAIN "mkdir -p ~/"
+    - scp -i $SSH_KEY -o StrictHostKeyChecking=no ./compose.yml $SERVER_USER@$SERVER_DOMAIN:~/compose.yml
+    - scp -i $SSH_KEY -o StrictHostKeyChecking=no -r ./letsencrypt $SERVER_USER@$SERVER_DOMAIN:~/letsencrypt
+    - ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_DOMAIN "touch ~/letsencrypt/acme.json"
+    - ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_DOMAIN "chmod 600 ~/letsencrypt/acme.json"
+    - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_DOMAIN "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
+    - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_DOMAIN "docker compose pull"
+    - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_DOMAIN "docker compose up -d"
+    - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_DOMAIN "docker compose logs"
+  needs:
+    - build
+  when: manual
+  tags:
+    - docker

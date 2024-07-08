@@ -1,0 +1,32 @@
+.chatlist-outer-grid-item {
+    height: 100vh;
+    border-right: solid 1px #d6d6d6;
+}
+
+.chatlist-inner-grid-container {
+    margin-top: 2.0rem;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+.chatlist-box {
+    margin-top: 2rem;
+    overflow-y: auto; 
+    max-height: 80vh;
+}
+
+.button-new-chat {
+    width: 100%;
+    border:  none !important;
+    outline: none !important;
+    text-transform: none;
+}
+
+.button-new-chat-grid {
+   margin-top: 3px; 
+   margin-bottom: 3px;
+   margin-left: 5px;
+   margin-right: 5px;
+   justify-content: space-between; 
+   align-items: center;
+}

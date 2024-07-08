@@ -1,0 +1,14 @@
+.item {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login {
+    border: none;
+    background: #5a5a5a;
+    outline: none;
+    border-radius: 6;
+    text-transform: none;
+}

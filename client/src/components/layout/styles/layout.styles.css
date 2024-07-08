@@ -1,0 +1,27 @@
+:root {
+    --sidebar-color: #f3f4f6;
+}
+
+.chat.open {
+    position: fixed;
+    top: 0;
+    left: 14vw;
+    width: 86vw;
+    height: 100vh;
+    margin-bottom: 4vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: all 0.5s;
+}
+
+.chat.close {
+    position: fixed;
+    top: 0;
+    left: 4vw;
+    width: 96vw;
+    height: 100vh;
+    margin-bottom: 4vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: all 0.5s;
+}

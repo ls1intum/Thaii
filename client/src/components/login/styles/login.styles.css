@@ -1,0 +1,11 @@
+:root {
+    color: #FCFCFC
+}
+
+.login {
+    width: 100vw;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background: #575757;
+}
