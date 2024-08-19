@@ -1,0 +1,58 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main  # or the branch you want to deploy from
+
+jobs:
+  build:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Docker
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to Container Registry
+      run: echo "${{ secrets.CI_REGISTRY_PASSWORD }}" | docker login ${{ secrets.CI_REGISTRY }} -u ${{ secrets.CI_REGISTRY_USER }} --password-stdin
+
+    - name: Build Docker Images
+      run: docker compose build
+
+    - name: Push Docker Images
+      run: |
+        docker push ${{ secrets.CI_REGISTRY }}/your-repo:client
+        docker push ${{ secrets.CI_REGISTRY }}/your-repo:server
+
+  deploy:
+    name: Deploy Application
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Install SSH Client
+      run: sudo apt-get update && sudo apt-get install -y openssh-client
+
+    - name: Add SSH Key
+      uses: webfactory/ssh-agent@v0.8.1
+      with:
+        ssh-private-key: ${{ secrets.SSH_KEY }}
+
+    - name: Copy Files to Server
+      run: |
+        scp -o StrictHostKeyChecking=no ./compose.yml ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }}:~/compose.yml
+        scp -o StrictHostKeyChecking=no -r ./letsencrypt ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }}:~/letsencrypt
+
+    - name: Deploy on Server
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }} "mkdir -p ~/"
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }} "touch ~/letsencrypt/acme.json && chmod 600 ~/letsencrypt/acme.json"
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }} "docker login -u ${{ secrets.CI_REGISTRY_USER }} -p ${{ secrets.CI_REGISTRY_PASSWORD }} ${{ secrets.CI_REGISTRY }}"
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }} "docker compose pull && docker compose up -d && docker compose logs"
