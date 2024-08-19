@@ -1,0 +1,86 @@
+services:
+  traefik:
+    restart: always
+    image: "traefik:latest"
+    command:
+      - --log.level=ERROR
+      - --providers.docker=true
+      - --entrypoints.web.address=:80
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.network=web
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - web
+
+  backend:
+    container_name: server
+    hostname: server
+    build:
+      context: .
+      dockerfile: docker/server/Dockerfile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`localhost`) && PathPrefix(`/api`)"
+      - "traefik.http.services.backend-service.loadbalancer.server.port=8000"
+      - "traefik.http.routers.backend.service=backend-service"
+      - "traefik.http.routers.backend.entrypoints=web"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - web
+      - backend
+    expose:
+      - "8000"
+    volumes:
+      - templates:/server/templates
+  
+  db:
+    image: postgres:16-alpine
+    env_file:
+      - .env
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  client:
+    container_name: client
+    hostname: client
+    build: 
+      context: .
+      dockerfile: docker/client/Dockerfile
+      args:
+        VITE_API_URL: "http://localhost:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.client.rule=Host(`localhost`)"
+      - "traefik.http.services.client-service.loadbalancer.server.port=3000"
+      - "traefik.http.routers.client.service=client-service"      
+      - "traefik.http.routers.client.entrypoints=web"
+    volumes:
+      - node_modules:/client/node_modules
+    depends_on:
+      - backend
+    networks:
+      - web
+    expose:
+      - "3000"
+
+networks:
+  web:
+    external: true
+    driver: bridge
+  backend:
+    external: false
+    driver: bridge
+    
+volumes:
+  db-data:
+  node_modules:
+  templates:
