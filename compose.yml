@@ -25,7 +25,7 @@ services:
   backend:
     container_name: server
     hostname: server
-    image: gitlab.lrz.de:5005/davidmang/ma-mang:ma-mang.server
+    image: ghcr.io/ls1intum/Thaii/server:latest
     build:
       context: .
       dockerfile: docker/server/Dockerfile
@@ -62,7 +62,7 @@ services:
   client:
     container_name: client
     hostname: client
-    image: gitlab.lrz.de:5005/davidmang/ma-mang:ma-mang.client
+    image: ghcr.io/ls1intum/Thaii/client:latest
     build: 
       context: .
       dockerfile: docker/client/Dockerfile

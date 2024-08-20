@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build Docker Images
+    name: Build and Push Docker Images
     runs-on: ubuntu-latest
 
     steps:
@@ -17,16 +17,17 @@ jobs:
     - name: Set up Docker
       uses: docker/setup-buildx-action@v2
 
-    - name: Log in to Container Registry
-      run: echo "${{ secrets.CI_REGISTRY_PASSWORD }}" | docker login ${{ secrets.CI_REGISTRY }} -u ${{ secrets.CI_REGISTRY_USER }} --password-stdin
+    - name: Log in to GitHub Container Registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-    - name: Build Docker Images
-      run: docker compose build
-
-    - name: Push Docker Images
+    - name: Build Docker Images with Docker Compose
       run: |
-        docker push ${{ secrets.CI_REGISTRY }}/your-repo:client
-        docker push ${{ secrets.CI_REGISTRY }}/your-repo:server
+        docker compose build
+
+    - name: Push Docker Images to GHCR
+      run: |
+        docker push ghcr.io/${{ github.repository }}/client:latest
+        docker push ghcr.io/${{ github.repository }}/server:latest
 
   deploy:
     name: Deploy Application
@@ -50,9 +51,30 @@ jobs:
         scp -o StrictHostKeyChecking=no ./compose.yml ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }}:~/compose.yml
         scp -o StrictHostKeyChecking=no -r ./letsencrypt ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }}:~/letsencrypt
 
+    - name: Set Up Environment Variables
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }} << 'EOF'
+        echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
+        echo "DEBUG=${{ secrets.DEBUG }}" >> .env
+        echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+        echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
+        echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
+        echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+        echo "POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}" >> .env
+        echo "EMAIL_USE_TLS=${{ secrets.EMAIL_USE_TLS }}" >> .env
+        echo "EMAIL_HOST=${{ secrets.EMAIL_HOST }}" >> .env
+        echo "EMAIL_HOST_USER=${{ secrets.EMAIL_HOST_USER }}" >> .env
+        echo "EMAIL_HOST_PASSWORD=${{ secrets.EMAIL_HOST_PASSWORD }}" >> .env
+        echo "DEFAULT_FROM_EMAIL=${{ secrets.DEFAULT_FROM_EMAIL }}" >> .env
+        echo "EMAIL_PORT=${{ secrets.EMAIL_PORT }}" >> .env
+        echo "DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}" >> .env
+        echo "DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}" >> .env
+        echo "DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }}" >> .env
+        EOF
+
     - name: Deploy on Server
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }} "mkdir -p ~/"
         ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }} "touch ~/letsencrypt/acme.json && chmod 600 ~/letsencrypt/acme.json"
-        ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }} "docker login -u ${{ secrets.CI_REGISTRY_USER }} -p ${{ secrets.CI_REGISTRY_PASSWORD }} ${{ secrets.CI_REGISTRY }}"
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }} "docker login ghcr.io -u ${{ github.actor }} --password-stdin <<< ${{ secrets.GITHUB_TOKEN }}"
         ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }} "docker compose pull && docker compose up -d && docker compose logs"
