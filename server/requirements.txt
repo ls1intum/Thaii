@@ -15,3 +15,5 @@ whitenoise
 exchangelib
 nltk
 scikit-learn
+pandas
+openpyxl
