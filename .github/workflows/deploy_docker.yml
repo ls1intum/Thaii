@@ -23,6 +23,10 @@ jobs:
         host: ${{ secrets.SERVER_DOMAIN }}
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SSH_KEY }}
+        proxy_host: ${{ vars.DEPLOYMENT_GATEWAY_HOST }}
+        proxy_username: ${{ vars.DEPLOYMENT_GATEWAY_USER }}
+        proxy_key: ${{ secrets.DEPLOYMENT_GATEWAY_SSH_KEY }}
+        proxy_port: ${{ vars.DEPLOYMENT_GATEWAY_PORT }}
         script: |
           docker compose -f compose.yml --env-file=.env down --remove-orphans --rmi all
 
@@ -35,6 +39,10 @@ jobs:
         host: ${{ secrets.SERVER_DOMAIN }}
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SSH_KEY }}
+        proxy_host: ${{ vars.DEPLOYMENT_GATEWAY_HOST }}
+        proxy_username: ${{ vars.DEPLOYMENT_GATEWAY_USER }}
+        proxy_key: ${{ secrets.DEPLOYMENT_GATEWAY_SSH_KEY }}
+        proxy_port: ${{ vars.DEPLOYMENT_GATEWAY_PORT }}
         script: |
           scp -o StrictHostKeyChecking=no ./compose.yml ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }}:~/compose.yml
           scp -o StrictHostKeyChecking=no -r ./letsencrypt ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }}:~/letsencrypt
@@ -45,6 +53,10 @@ jobs:
         host: ${{ secrets.SERVER_DOMAIN }}
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SSH_KEY }}
+        proxy_host: ${{ vars.DEPLOYMENT_GATEWAY_HOST }}
+        proxy_username: ${{ vars.DEPLOYMENT_GATEWAY_USER }}
+        proxy_key: ${{ secrets.DEPLOYMENT_GATEWAY_SSH_KEY }}
+        proxy_port: ${{ vars.DEPLOYMENT_GATEWAY_PORT }}
         script: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }} << 'EOF'
           touch .env 
@@ -72,6 +84,10 @@ jobs:
         host: ${{ secrets.SERVER_DOMAIN }}
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SSH_KEY }}
+        proxy_host: ${{ vars.DEPLOYMENT_GATEWAY_HOST }}
+        proxy_username: ${{ vars.DEPLOYMENT_GATEWAY_USER }}
+        proxy_key: ${{ secrets.DEPLOYMENT_GATEWAY_SSH_KEY }}
+        proxy_port: ${{ vars.DEPLOYMENT_GATEWAY_PORT }}
         script: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }} "mkdir -p ~/"
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }} "touch ~/letsencrypt/acme.json && chmod 600 ~/letsencrypt/acme.json"
