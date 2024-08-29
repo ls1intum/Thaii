@@ -33,19 +33,31 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: Copy Files to Server
-      uses: appleboy/ssh-action@v1.0.3
+    - name: Copy Docker Compose File From Repo to VM Host
+      uses: appleboy/scp-action@v0.1.7
       with:
-        host: ${{ secrets.SERVER_DOMAIN }}
-        username: ${{ secrets.SERVER_USER }}
-        key: ${{ secrets.SSH_KEY }}
+        host: ${{ vars.VM_HOST }}
+        username: ${{ vars.VM_USERNAME }}
+        key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
         proxy_host: ${{ vars.DEPLOYMENT_GATEWAY_HOST }}
         proxy_username: ${{ vars.DEPLOYMENT_GATEWAY_USER }}
         proxy_key: ${{ secrets.DEPLOYMENT_GATEWAY_SSH_KEY }}
         proxy_port: ${{ vars.DEPLOYMENT_GATEWAY_PORT }}
-        script: |
-          scp -o StrictHostKeyChecking=no ./compose.yml ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }}:~/compose.yml
-          scp -o StrictHostKeyChecking=no -r ./letsencrypt ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }}:~/letsencrypt
+        source: "./compose.yml"
+        target: /home/${{ secrets.SERVER_USER }}
+
+    - name: Copy Letsencrypt File From Repo to VM Host
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ vars.VM_HOST }}
+        username: ${{ vars.VM_USERNAME }}
+        key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
+        proxy_host: ${{ vars.DEPLOYMENT_GATEWAY_HOST }}
+        proxy_username: ${{ vars.DEPLOYMENT_GATEWAY_USER }}
+        proxy_key: ${{ secrets.DEPLOYMENT_GATEWAY_SSH_KEY }}
+        proxy_port: ${{ vars.DEPLOYMENT_GATEWAY_PORT }}
+        source: "./letsencrypt"
+        target: /home/${{ secrets.SERVER_USER }}
 
     - name: Set Up Environment Variables
       uses: appleboy/ssh-action@v1.0.3
