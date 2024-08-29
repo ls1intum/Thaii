@@ -70,7 +70,6 @@ jobs:
         proxy_key: ${{ secrets.DEPLOYMENT_GATEWAY_SSH_KEY }}
         proxy_port: ${{ vars.DEPLOYMENT_GATEWAY_PORT }}
         script: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_DOMAIN }} << 'EOF'
           touch .env 
           echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
           echo "DEBUG=${{ secrets.DEBUG }}" >> .env
@@ -88,7 +87,6 @@ jobs:
           echo "DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}" >> .env
           echo "DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}" >> .env
           echo "DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }}" >> .env
-          EOF
 
     - name: SSH to VM and Execute Docker-Compose Up
       uses: appleboy/ssh-action@v1.0.3
