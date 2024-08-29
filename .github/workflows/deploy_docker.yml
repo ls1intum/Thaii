@@ -36,9 +36,9 @@ jobs:
     - name: Copy Docker Compose File From Repo to VM Host
       uses: appleboy/scp-action@v0.1.7
       with:
-        host: ${{ vars.VM_HOST }}
-        username: ${{ vars.VM_USERNAME }}
-        key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
+        host: ${{ secrets.SERVER_DOMAIN }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SSH_KEY }}
         proxy_host: ${{ vars.DEPLOYMENT_GATEWAY_HOST }}
         proxy_username: ${{ vars.DEPLOYMENT_GATEWAY_USER }}
         proxy_key: ${{ secrets.DEPLOYMENT_GATEWAY_SSH_KEY }}
@@ -49,9 +49,9 @@ jobs:
     - name: Copy Letsencrypt File From Repo to VM Host
       uses: appleboy/scp-action@v0.1.7
       with:
-        host: ${{ vars.VM_HOST }}
-        username: ${{ vars.VM_USERNAME }}
-        key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
+        host: ${{ secrets.SERVER_DOMAIN }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SSH_KEY }}
         proxy_host: ${{ vars.DEPLOYMENT_GATEWAY_HOST }}
         proxy_username: ${{ vars.DEPLOYMENT_GATEWAY_USER }}
         proxy_key: ${{ secrets.DEPLOYMENT_GATEWAY_SSH_KEY }}
