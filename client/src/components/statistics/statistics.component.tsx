@@ -11,6 +11,7 @@ import { getPagesForInsights } from "../../services/pages.service";
 import { getLabels } from "../../services/label.service";
 import { getTags } from "../../services/tags.service";
 import { useToolStore } from "../../states/global.store";
+import { addEventLog } from "../../services/interactions.service";
 
 const Filter = lazy(() => import("./filter/filter.component"));
 const BehavioralDashboard = lazy(
@@ -120,7 +121,14 @@ function Statistics({ open }: SidebarParams) {
                   key={tabItem.name}
                   elevation={0}
                   className="main tabs"
-                  onClick={() => setTab(tabItem.tab)}
+                  onClick={() => {
+                    setTab(tabItem.tab);
+                    if ((import.meta.env.VITE_ENABLE_TRACKING as string) == "true") {
+                      addEventLog({
+                        location: "Insights - " + tabItem.name,
+                      });
+                    }
+                  }}
                   sx={{
                     border: tabItem.tab === tab ? "solid 2px #7f7f7f" : 0,
                   }}

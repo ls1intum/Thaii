@@ -1,8 +1,8 @@
 import pandas as pd
 from django.shortcuts import render
-from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from chat.models import Message, Chat
 from .models import EventLog
 from .serializers import EventLogSerializer
 from rest_framework.response import Response
@@ -14,19 +14,25 @@ class EventLogView(APIView):
     
     def get(self, request, *args, **kwargs):
         user = self.request.user
-        user_data = EventLog.objects.filter(user=user).values()
+        interaction_data = EventLog.objects.filter(user=user).values()
+        chat_data = Message.objects.filter(user=user).values('id', 'request', 'response', 'chat__title', 'chat__page__label', 'created_at')   
 
         # Convert the data to a pandas DataFrame
-        df = pd.DataFrame(list(user_data))
+        interaction_df = pd.DataFrame(list(interaction_data))
+        interaction_df['created_at'] = interaction_df['created_at'].astype(str)
+        
+        chat_df = pd.DataFrame(list(chat_data))
+        chat_df['created_at'] = chat_df['created_at'].astype(str)
 
         # Create an Excel file in memory
         response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         response['Content-Disposition'] = f'attachment; filename={user.username}_data.xlsx'
 
         with pd.ExcelWriter(response, engine='openpyxl') as writer:
-            df.to_excel(writer, index=False, sheet_name='UserData')
+            chat_df.to_excel(writer, index=False, sheet_name='ChatData')
+            interaction_df.to_excel(writer, index=False, sheet_name='InteractionData')
     
-        return Response(response, status=status.HTTP_200_OK)
+        return response
     
     def post(self, request, *args, **kwargs):
         try:
