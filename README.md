@@ -12,11 +12,13 @@ Thaii (Tool to analyze Human-AI-Interaction) is designed to provide users with i
 
 Ensure you have the following installed on your machine:
 
-- Node.js (v14 or higher)
-- npm (v6 or higher)
-- Python (v3.8 or higher)
+- [Node.js](https://nodejs.org/en) (v14 or higher)
+- [npm](https://www.npmjs.com/) (v6 or higher)
+- [Python](https://www.python.org/) (v3.8 or higher)
 - pip
 - virtualenv
+- [Docker](https://docs.docker.com/get-docker/) (version 20.x or later)
+- [Docker Compose](https://docs.docker.com/compose/install/) (version 1.29.x or later)
 
 ## Client Setup (React + Vite)
 
@@ -88,7 +90,9 @@ Ensure you have the necessary environment variables set up for both the frontend
 ### Client `.env` Example
 ```plaintext
 VITE_API_URL=http://localhost:8000/
+VITE_ENABLE_TRACKING=true/false 
 ```
+- `VITE_ENABLE_TRACKING`: Enables or disables tracking of user interactions with the webapplication. 
 
 ### Server `.env` Example
 ```plaintext
@@ -110,9 +114,34 @@ DJANGO_SUPERUSER_PASSWORD=your_django_superuser_password
 DJANGO_SUPERUSER_EMAIL=your_django_superuser_email
 ```
 - `OPENAI_API_KEY`: Key for an OpenAI project to leverage the OpenAI API
-- `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_HOST`: Variables to setup and connect to a PostgreSQL database used to store the data created.
+- `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_HOST`: Variables to setup and connect to a PostgreSQL database used to store the data created. The POSTGRES_HOST name is 'localhost' for the local development and 'db' when using docker to run it locally or for deloyment
 - `EMAIL_HOST`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, `DEFAULT_FROM_EMAIL`: Email configurations to send activation emails for the register flow of users
 - `DJANGO_SUPERUSER_USERNAME`, `DJANGO_SUPERUSER_PASSWORD`, `DJANGO_SUPERUSER_EMAIL`: Only important for the productive environment. When deployed a superuser with these credentials is created if it does not exist already.
+
+## Running Application with Docker
+When you only want to run the application locally without setting up the client and server you can use Docker. 
+
+1. Prerequisites:
+- Make sure you installed and run Docker on your local machine
+- Make sure you created an .env file with the variables above for the server in the root directory
+
+2. Build and run the containers:
+To build the Docker images and start the services defined in the Docker Compose file, run the following command:
+```bash
+docker-compose -f compose.dev.yml up --build
+```
+
+3. Access the web application:
+Once the containers are up and running, you can access the web application in your browser at:
+```bash
+http://localhost:80
+```
+
+4. Stopping the containers:
+To stop the running containers, press Ctrl + C in the terminal where Docker Compose is running, or run:
+```bash
+docker-compose -f compose.dev.yml down
+```
 
 ## Running Application
 With both the client and server running, you should be able to access the web application at http://localhost:5173.

@@ -68,6 +68,7 @@ services:
       dockerfile: docker/client/Dockerfile
       args:
         VITE_API_URL: "https://ma-mang.ase.cit.tum.de"
+        VITE_ENABLE_TRACKING: "false"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.client.rule=Host(`ma-mang.ase.cit.tum.de`)"

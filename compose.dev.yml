@@ -57,6 +57,7 @@ services:
       dockerfile: docker/client/Dockerfile
       args:
         VITE_API_URL: "http://localhost:80"
+        VITE_ENABLE_TRACKING: "true"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.client.rule=Host(`localhost`)"
