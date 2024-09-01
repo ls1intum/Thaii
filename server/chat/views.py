@@ -9,7 +9,6 @@ from .services.openai import generate_response
 from rest_framework.response import Response
 from rest_framework import status
 
-# Create your views here.
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer

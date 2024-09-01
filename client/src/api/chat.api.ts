@@ -1,6 +1,8 @@
 import { ChatBody } from "../types/chatbot/chatbot.types";
 import api from "./interceptor.api";
 
+// Fetch all chats for a user
+// @limit: Number of loaded chats. Default number is 5.
 export const fetchChats = async (limit: number) => {
   try {
     if (!limit) {
