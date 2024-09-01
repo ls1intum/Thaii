@@ -84,6 +84,9 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+          build-args: |
+            "VITE_API_URL=${{ var.VITE_API_URL }}"
+            "VITE_ENABLE_TRACKING"=${{ var.VITE_ENABLE_TRACKING }}"
 
       - id: output-tag-client
         run: |

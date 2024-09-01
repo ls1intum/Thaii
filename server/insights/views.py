@@ -19,6 +19,7 @@ from datetime import date
 import datetime
 from django.contrib.postgres.aggregates import StringAgg
 
+# Get current date and time
 now_ = now()
 
 class TotalChatsView(APIView):
