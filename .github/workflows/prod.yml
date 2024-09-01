@@ -2,7 +2,7 @@ name: Build and Deploy to Prod
 
 on:
   push:
-    branches: [develop]
+    branches: [main]
 
 jobs:
   build-prod-container:
