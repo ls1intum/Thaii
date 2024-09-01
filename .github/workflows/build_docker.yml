@@ -19,11 +19,11 @@ jobs:
         include:
           - dockerfile: .docker/client/Dockerfile
             image: ghcr.io/ls1intum/thaii/client
-            context: ./client
+            context: .
             path: client
           - dockerfile: .docker/server/Dockerfile
             image: ghcr.io/ls1intum/thaii/server
-            context: ./server
+            context: .
             path: server
     outputs:
       server_image_tag: "${{ steps.output-tag-server.outputs.server_image_tag }}"
