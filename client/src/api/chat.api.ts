@@ -15,6 +15,7 @@ export const fetchChats = async (limit: number) => {
   }
 };
 
+// Fetch the count of all chats for a user
 export const fetchChatsCount = async () => {
   try {
     const response = await api.get(`/api/v1/chats/count/`);

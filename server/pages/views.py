@@ -8,7 +8,6 @@ from rest_framework import status
 from chat.models import Chat
 from rest_framework.permissions import IsAuthenticated
 
-# Create your views here.
 class PageListView(APIView):
     permission_classes = [IsAuthenticated]
     
