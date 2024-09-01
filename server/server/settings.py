@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'pages',
     'insights',
     'deploy_management',
+    'interactions',
     'rest_framework',
     'corsheaders'
 ]
