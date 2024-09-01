@@ -11,6 +11,7 @@ nltk.download('stopwords')
 
 cachedStopWords = stopwords.words("english")
 
+# Handler to find common words in messages of users
 def handle_array_common_word(array, variant):
     textList = []
     formattedTextList = []

@@ -1,6 +1,8 @@
 import { ChatBody } from "../types/chatbot/chatbot.types";
 import api from "./interceptor.api";
 
+// Fetch all chats for an user
+// @limit: Number of loaded chats. Default number is 5.
 export const fetchChats = async (limit: number) => {
   try {
     if (!limit) {
@@ -13,6 +15,7 @@ export const fetchChats = async (limit: number) => {
   }
 };
 
+// Fetch the count of all chats for an user
 export const fetchChatsCount = async () => {
   try {
     const response = await api.get(`/api/v1/chats/count/`);
@@ -23,6 +26,7 @@ export const fetchChatsCount = async () => {
   }
 };
 
+// Fetch chat by chat ID for an user
 export const fetchChatById = async (chatId: number) => {
   try {
     const response = await api.get(`/api/v1/chats/${chatId}/`);
@@ -32,6 +36,8 @@ export const fetchChatById = async (chatId: number) => {
   }
 };
 
+// Fetch chats assigned to a page for a user
+// @pageId: Id of a existing page
 export const fetchChatByPageId = async (pageId: number) => {
   try {
     const response = await api.get(`/api/v1/chats/page/${pageId}/`);
@@ -42,6 +48,8 @@ export const fetchChatByPageId = async (pageId: number) => {
   }
 };
 
+// Create new chat
+// @chat: title: string, page: string, labels: string[] 
 export const createChat = async (chat: ChatBody) => {
   try {
     const response = await api.post("/api/v1/chats/", chat);
@@ -52,6 +60,9 @@ export const createChat = async (chat: ChatBody) => {
   }
 };
 
+// Change existing chat of user
+// @chat: title: string, page: string, labels: string[] 
+// @id: id of chat which should be changed
 export const changeChat = async (id: number, chat: ChatBody) => {
   try {
     const response = await api.put(`/api/v1/chats/${id}/`, chat);
@@ -62,6 +73,8 @@ export const changeChat = async (id: number, chat: ChatBody) => {
   }
 };
 
+// Delete existing chat of user
+// @id: id of chat to delete
 export const deleteChat = async (id: number) => {
   try {
     const response = await api.delete(`/api/v1/chats/${id}/`);

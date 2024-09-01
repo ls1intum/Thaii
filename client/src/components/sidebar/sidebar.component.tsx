@@ -23,6 +23,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getUserPermissions } from "../../services/user.service";
+import { addEventLog } from "../../services/interactions.service";
+import DownloadButton from "./download-button/download-button.component";
 
 function Sidebar({ open, setOpen }: SidebarParams) {
   const navigate = useNavigate();
@@ -112,6 +114,17 @@ function Sidebar({ open, setOpen }: SidebarParams) {
                 }}
                 onClick={() => {
                   navigate(item.link);
+                  if (
+                    (import.meta.env.VITE_ENABLE_TRACKING as string) == "true"
+                  ) {
+                    if (item.name == "Insights") {
+                      addEventLog({
+                        location: item.name + " - Behavioral Indicators",
+                      });
+                    } else {
+                      addEventLog({ location: item.name });
+                    }
+                  }
                 }}
               >
                 <Stack
@@ -142,6 +155,19 @@ function Sidebar({ open, setOpen }: SidebarParams) {
               </Grid>
             );
           })}
+        <Grid
+          item
+          xs={12}
+          sx={{
+            display: "flex",
+            justifyContent: "flex-start",
+            ml: "1rem",
+            mr: "1rem",
+            mt: "3vh",
+          }}
+        >
+          <DownloadButton />
+        </Grid>
       </Grid>
       <Grid
         container

@@ -47,7 +47,7 @@ REST_FRAMEWORK = {
 }
 
 STATICFILES_STORAGE = ('whitenoise.storage.CompressedManifestStaticFilesStorage')
-STATIC_URL = '/static/'
+STATIC_URL = '/api/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "templates")
 
 SIMPLE_JWT = {
@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'pages',
     'insights',
     'deploy_management',
+    'interactions',
     'rest_framework',
     'corsheaders'
 ]

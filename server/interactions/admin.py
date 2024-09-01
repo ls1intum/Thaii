@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Tag, Page
+from .models import EventLog
 from django.contrib.auth.models import User
 import csv
 from django.http import HttpResponse
@@ -27,19 +27,11 @@ def export_as_csv(modeladmin, request, queryset):
 
 export_as_csv.short_description = "Export Selected as CSV"
 
-class ModelsTagActions(admin.ModelAdmin):
-    list_display = [field.name for field in Tag._meta.fields]
+class ModelsEventLogActions(admin.ModelAdmin):
+    list_display = [field.name for field in EventLog._meta.fields]
     actions = [export_as_csv]
-    search_fields = [field.name for field in Tag._meta.fields if field.name != 'id']  
-    list_filter = [field.name for field in Tag._meta.fields if field.get_internal_type() in ('CharField', 'BooleanField', 'DateField', 'DateTimeField', 'ForeignKey', 'IntegerField')]
-    
-class ModelsPageActions(admin.ModelAdmin):
-    list_display = [field.name for field in Page._meta.fields]
-    actions = [export_as_csv]
-    search_fields = [field.name for field in Page._meta.fields if field.name != 'id']  
-    list_filter = [field.name for field in Page._meta.fields if field.get_internal_type() in ('CharField', 'BooleanField', 'DateField', 'DateTimeField', 'ForeignKey', 'IntegerField')]  
-
-
+    search_fields = [field.name for field in EventLog._meta.fields if field.name != 'id']  
+    list_filter = [field.name for field in EventLog._meta.fields if field.get_internal_type() in ('CharField', 'BooleanField', 'DateField', 'DateTimeField', 'ForeignKey', 'IntegerField')]
+      
 # Register your models here.
-admin.site.register(Tag, ModelsTagActions)
-admin.site.register(Page, ModelsPageActions)
+admin.site.register(EventLog, ModelsEventLogActions)

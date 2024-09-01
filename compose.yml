@@ -25,7 +25,7 @@ services:
   backend:
     container_name: server
     hostname: server
-    image: ghcr.io/ls1intum/Thaii/server:latest
+    image: ghcr.io/ls1intum/thaii/server:latest
     build:
       context: .
       dockerfile: docker/server/Dockerfile
@@ -62,7 +62,7 @@ services:
   client:
     container_name: client
     hostname: client
-    image: ghcr.io/ls1intum/Thaii/client:latest
+    image: ghcr.io/ls1intum/thaii/client:latest
     build: 
       context: .
       dockerfile: docker/client/Dockerfile

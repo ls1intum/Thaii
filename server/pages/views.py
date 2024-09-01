@@ -8,7 +8,6 @@ from rest_framework import status
 from chat.models import Chat
 from rest_framework.permissions import IsAuthenticated
 
-# Create your views here.
 class PageListView(APIView):
     permission_classes = [IsAuthenticated]
     
@@ -113,3 +112,11 @@ class TagApiView(APIView):
             serializer.save(user=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk, format=None):
+        try:
+            tag = Tag.objects.get(id=pk)
+        except Tag.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        tag.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
