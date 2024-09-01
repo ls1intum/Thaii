@@ -2,7 +2,7 @@ FROM python:3.12.4-slim-bookworm
 
 WORKDIR /server
 
-COPY ./server .
+COPY ../../server .
 
 RUN python3 -m venv /opt/venv && \
     /opt/venv/bin/pip install --upgrade pip && \

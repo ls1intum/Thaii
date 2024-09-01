@@ -1,6 +1,13 @@
 import { FilterBody } from "../types/statistics/statistics.types";
 import api from "./interceptor.api";
 
+//@filter:
+// - dateRange: Dates included in analysis
+// - page: Pages included in analysis
+// - labels: Labels included in analysis
+// - tags: Tags included in analysis
+
+// Fetch number of total chats
 export const fetchTotalChats = async (filter: FilterBody) => {
   try {
     const response = await api.post(`/api/v1/insights/total-chats/`, filter);
@@ -10,6 +17,7 @@ export const fetchTotalChats = async (filter: FilterBody) => {
   }
 };
 
+// Fetch number of total messages
 export const fetchTotalMessages = async (filter: FilterBody) => {
   try {
     const response = await api.post(`/api/v1/insights/total-messages/`, filter);

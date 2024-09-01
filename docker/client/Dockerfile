@@ -6,11 +6,11 @@ ENV VITE_API_URL=$VITE_API_URL
 
 WORKDIR /client
 
-COPY ./client/package*.json ./
+COPY ../../client/package*.json ./
 
 RUN npm install
 
-COPY ./client .
+COPY ../../client .
 
 RUN npm run build
 
