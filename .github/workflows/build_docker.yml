@@ -85,8 +85,8 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           build-args: |
-            "VITE_API_URL=${{ var.VITE_API_URL }}"
-            "VITE_ENABLE_TRACKING"=${{ var.VITE_ENABLE_TRACKING }}"
+            "VITE_API_URL=${{ vars.VITE_API_URL }}"
+            "VITE_ENABLE_TRACKING"=${{ vars.VITE_ENABLE_TRACKING }}"
 
       - id: output-tag-client
         run: |
