@@ -17,11 +17,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - dockerfile: .docker/client/Dockerfile
+          - dockerfile: ./docker/client/Dockerfile
             image: ghcr.io/ls1intum/thaii/client
             context: .
             path: client
-          - dockerfile: .docker/server/Dockerfile
+          - dockerfile: ./docker/server/Dockerfile
             image: ghcr.io/ls1intum/thaii/server
             context: .
             path: server
