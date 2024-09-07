@@ -14,3 +14,6 @@ export type StatisticParams = {
     messages: any
 }
 
+export type DownloadButtonParams = {
+    open: boolean;
+}

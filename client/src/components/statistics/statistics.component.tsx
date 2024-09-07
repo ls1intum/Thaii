@@ -1,17 +1,17 @@
 import { Grid, Paper, Stack, Typography } from "@mui/material";
 import "../layout/styles/layout.styles.css";
-import { SidebarParams } from "../../types/types/sidebar.types";
+import { SidebarParams } from "../../types/sidebar/sidebar.types";
 import { lazy, Suspense, useEffect, useState } from "react";
 import "rsuite/dist/rsuite.min.css";
 import "./styles/statistics.styles.css";
 import LoadingComponent from "../general/loading-component/loading.component";
-import { PageDTO, TagDTO } from "../pages/types/pages.types";
 import { LabelDTO } from "../../types/chatbot/chatbot.types";
 import { getPagesForInsights } from "../../services/pages.service";
 import { getLabels } from "../../services/label.service";
 import { getTags } from "../../services/tags.service";
 import { useToolStore } from "../../states/global.store";
 import { addEventLog } from "../../services/interactions.service";
+import { PageDTO, TagDTO } from "../../types/page/page.types";
 
 const Filter = lazy(() => import("./filter/filter.component"));
 const BehavioralDashboard = lazy(

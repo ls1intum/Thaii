@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import WavingHandIcon from "@mui/icons-material/WavingHand";
 import { menu_items } from "./helpers/sidebar.helpers";
-import { MenuItem, SidebarParams } from "../../types/types/sidebar.types";
+import { MenuItem, SidebarParams } from "../../types/sidebar/sidebar.types";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import {
   Sidebar as SidebarIcon,
@@ -160,13 +160,11 @@ function Sidebar({ open, setOpen }: SidebarParams) {
           xs={12}
           sx={{
             display: "flex",
-            justifyContent: "flex-start",
-            ml: "1rem",
-            mr: "1rem",
+            justifyContent: "center",
             mt: "3vh",
           }}
         >
-          <DownloadButton />
+          <DownloadButton open={open} />
         </Grid>
       </Grid>
       <Grid

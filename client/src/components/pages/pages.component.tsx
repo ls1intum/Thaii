@@ -1,5 +1,5 @@
 import { Button, Grid, Typography } from "@mui/material";
-import { SidebarParams } from "../../types/types/sidebar.types";
+import { SidebarParams } from "../../types/sidebar/sidebar.types";
 import { Edit } from "react-feather";
 import { lazy, Suspense, useEffect, useState } from "react";
 import CustomSnackbar from "../general/snackbar/snackbar.component";

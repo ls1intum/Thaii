@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { SidebarParams } from "../../types/types/sidebar.types";
+import { SidebarParams } from "../../types/sidebar/sidebar.types";
 
 function Documentation({ open }: SidebarParams) {
   return (

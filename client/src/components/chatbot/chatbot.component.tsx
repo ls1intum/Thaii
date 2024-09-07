@@ -9,7 +9,7 @@ import {
   IconButton,
   useTheme,
 } from "@mui/material";
-import { SidebarParams } from "../../types/types/sidebar.types";
+import { SidebarParams } from "../../types/sidebar/sidebar.types";
 import "../layout/styles/layout.styles.css";
 import { ArrowUpCircle, Edit } from "react-feather";
 import { lazy, Suspense, useEffect, useState } from "react";
