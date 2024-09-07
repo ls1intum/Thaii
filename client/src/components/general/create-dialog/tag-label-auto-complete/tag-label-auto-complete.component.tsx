@@ -7,9 +7,9 @@ import {
 } from "@mui/material";
 import { CheckSquare, Square } from "react-feather";
 import { SyntheticEvent } from "react";
-import { TagDTO } from "../../../pages/types/pages.types";
-import { TagLabelListParams } from "../types/creation-dialog.types";
+import { TagLabelListParams } from "../../../../types/create-dialog/creation-dialog.types";
 import { LabelDTO } from "../../../../types/chatbot/chatbot.types";
+import { TagDTO } from "../../../../types/page/page.types";
 
 function TagLabelAutoComplete({
   elements,

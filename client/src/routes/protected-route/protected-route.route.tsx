@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import { REFRESH_TOKEN, ACCESS_TOKEN } from "../../../helpers/auth.helpers";
+import { REFRESH_TOKEN, ACCESS_TOKEN } from "../../helpers/auth.helpers";
 import { useState, useEffect } from "react";
-import { refreshToken } from "../../../api/auth.api";
-import { useAuthStore } from "../../../states/global.store";
+import { refreshToken } from "../../api/auth.api";
+import { useAuthStore } from "../../states/global.store";
 
 function ProtectedRoute() {
   const [loading, setLoading] = useState(true);

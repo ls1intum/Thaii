@@ -1,5 +1,5 @@
 import { Alert, Snackbar } from "@mui/material";
-import { SnackbarParams } from "./types/snackbar.types";
+import { SnackbarParams } from "../../../types/general/general.types";
 
 function CustomSnackbar({ message, type, open, handleClose }: SnackbarParams) {
 

@@ -1,6 +1,6 @@
 import { Grid, Paper, Stack, Typography } from "@mui/material";
 import "../layout/styles/layout.styles.css";
-import { SidebarParams } from "../sidebar/types/sidebar.types";
+import { SidebarParams } from "../../types/types/sidebar.types";
 import { lazy, Suspense, useEffect, useState } from "react";
 import "rsuite/dist/rsuite.min.css";
 import "./styles/statistics.styles.css";

@@ -9,7 +9,7 @@ import {
   IconButton,
   useTheme,
 } from "@mui/material";
-import { SidebarParams } from "../sidebar/types/sidebar.types";
+import { SidebarParams } from "../../types/types/sidebar.types";
 import "../layout/styles/layout.styles.css";
 import { ArrowUpCircle, Edit } from "react-feather";
 import { lazy, Suspense, useEffect, useState } from "react";
@@ -21,7 +21,7 @@ import LoadingComponent from "../general/loading-component/loading.component";
 import { useToolStore } from "../../states/global.store";
 import { getPages } from "../../services/pages.service";
 import "./styles/chatbot.styles.css";
-import EmptyChat from "../general/empty-chat/empty-chat.component";
+import EmptyChat from "./empty-chat/empty-chat.component";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorBoundaryFallback from "../general/error-boundary/error-boundary.component";
 import CreationDialog from "../general/create-dialog/creation-dialog.component";

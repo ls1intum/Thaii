@@ -4,22 +4,22 @@ import PageLayout from "./components/layout/page-layout.component";
 import Chatbot from "./components/chatbot/chatbot.component";
 import Pages from "./components/pages/pages.component";
 import Login from "./components/login/login.component";
-import ProtectedRoute from "./components/general/protected-route/protected-route.route";
+import ProtectedRoute from "./routes/protected-route/protected-route.route";
 import Register from "./components/register/register.component";
 import Activation from "./components/register/activation/activation.component";
 import AdminTable from "./components/admin-table/admin-table.component";
 import Statistics from "./components/statistics/statistics.component";
 import NotFound from "./components/not-found/not-found.component";
 import InactivityLogout from "./components/general/inactivity-logout/inactivity-logout.component";
-import AdminRoute from "./components/general/admin-route/admin-route.component";
 import Documentation from "./components/documentation/documentation.component";
 import { useAuthStore, useToolStore } from "./states/global.store";
 import { getPagesForInsights } from "./services/pages.service";
 import { getLabels } from "./services/label.service";
 import { getTags } from "./services/tags.service";
-import { PageDTO, TagDTO } from "./components/pages/types/pages.types";
 import { LabelDTO } from "./types/chatbot/chatbot.types";
 import { QueryClient, QueryClientProvider } from "react-query";
+import AdminRoute from "./routes/admin-route/admin-route.component";
+import { PageDTO, TagDTO } from "./types/page/page.types";
 
 function App() {
   const queryClient = new QueryClient()
