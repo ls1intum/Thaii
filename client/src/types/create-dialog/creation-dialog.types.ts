@@ -25,6 +25,8 @@ export type TagLabelListParams = {
   setCurrentElements: (currentElement: TagDTO[] | LabelDTO[]) => void;
   selectedTagsOrLabels: string[];
   setSelectedTagsOrLabels: (selectedTagOrLabel: string[]) => void;
+  fetchTagOrLabelData: () => void;
+  source: string;
 };
 
 export type TagLabelDialogParams = {

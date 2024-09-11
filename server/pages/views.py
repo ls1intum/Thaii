@@ -116,6 +116,7 @@ class TagApiView(APIView):
     def delete(self, request, pk, format=None):
         try:
             tag = Tag.objects.get(id=pk)
+            tag.pages.clear()
         except Tag.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         tag.delete()

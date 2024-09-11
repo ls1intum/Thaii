@@ -21,7 +21,20 @@ export const createLabel = async (label: LabelBody) => {
     const response = await api.post("/api/v1/labels/", label);
     return response; 
   } catch (error) {
-    console.error("Error creating user:", error);
+    console.error("Error creating label:", error);
     throw error;
   }
 };
+
+// Delete existing label of user
+// @id: id of label to delete
+export const deleteLabel = async (id: number) => {
+  try {
+    const response = await api.delete(`/api/v1/labels/${id}/`);
+    return response;
+  } catch (error) {
+    console.error("Error deleting label:", error);
+    throw error;
+  }
+};
+

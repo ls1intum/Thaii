@@ -323,6 +323,8 @@ function CreationDialog({
                       setCurrentElements={setCurrentElements}
                       selectedTagsOrLabels={selectedTagOrLabel}
                       setSelectedTagsOrLabels={setSelectedTagOrLabel}
+                      fetchTagOrLabelData={fetchTagOrLabelData}
+                      source={source}
                     />
                   </Suspense>
                 </ErrorBoundary>

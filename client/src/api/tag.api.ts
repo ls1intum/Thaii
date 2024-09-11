@@ -21,7 +21,19 @@ export const createTag = async (tag: TagBody) => {
     const response = await api.post("/api/v1/tags/", tag);
     return response; 
   } catch (error) {
-    console.error("Error creating user:", error);
+    console.error("Error creating tag:", error);
+    throw error;
+  }
+};
+
+// Delete existing tag of user
+// @id: id of tag to delete
+export const deleteTag = async (id: number) => {
+  try {
+    const response = await api.delete(`/api/v1/tags/${id}/`);
+    return response;
+  } catch (error) {
+    console.error("Error deleting tag:", error);
     throw error;
   }
 };
