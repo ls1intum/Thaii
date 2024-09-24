@@ -7,7 +7,7 @@ import api from "./interceptor.api";
 // - labels: Labels included in analysis
 // - tags: Tags included in analysis
 
-// Fetch number of total chats
+// Fetches the total number of chats based on the provided filter criteria
 export const fetchTotalChats = async (filter: FilterBody) => {
   try {
     const response = await api.post(`/api/v1/insights/total-chats/`, filter);
@@ -17,7 +17,7 @@ export const fetchTotalChats = async (filter: FilterBody) => {
   }
 };
 
-// Fetch number of total messages
+// Fetches the total number of messages based on the provided filter criteria
 export const fetchTotalMessages = async (filter: FilterBody) => {
   try {
     const response = await api.post(`/api/v1/insights/total-messages/`, filter);
@@ -27,6 +27,7 @@ export const fetchTotalMessages = async (filter: FilterBody) => {
   }
 };
 
+// Fetches chats and messages statistics by a specific time unit
 export const fetchChatsMessagesByTime = async (
   filter: FilterBody,
   item: number
@@ -42,6 +43,7 @@ export const fetchChatsMessagesByTime = async (
   }
 };
 
+// Fetches chats and messages statistics by a specific item
 export const fetchChatsMessagesByItem = async (
   filter: FilterBody,
   item: number
@@ -57,6 +59,7 @@ export const fetchChatsMessagesByItem = async (
   }
 };
 
+// Fetches the duration of conversations based on the provided filter criteria
 export const fetchConversationDuration = async (filter: FilterBody) => {
   try {
     const response = await api.post(
@@ -69,6 +72,7 @@ export const fetchConversationDuration = async (filter: FilterBody) => {
   }
 };
 
+// Fetches conversation duration by specific items
 export const fetchConversationDurationByItem = async (
   filter: FilterBody,
   item: number
@@ -84,6 +88,7 @@ export const fetchConversationDurationByItem = async (
   }
 };
 
+// Fetches the total emission statistics based on the filter criteria
 export const fetchTotalEmission = async (filter: FilterBody) => {
   try {
     const response = await api.post(`/api/v1/insights/total-emission/`, filter);
@@ -93,6 +98,7 @@ export const fetchTotalEmission = async (filter: FilterBody) => {
   }
 };
 
+// Fetches total water usage statistics based on the filter criteria
 export const fetchTotalWater = async (filter: FilterBody) => {
   try {
     const response = await api.post(`/api/v1/insights/total-water/`, filter);
@@ -102,6 +108,7 @@ export const fetchTotalWater = async (filter: FilterBody) => {
   }
 };
 
+// Fetches the total cost statistics based on the filter criteria
 export const fetchTotalCost = async (filter: FilterBody) => {
   try {
     const response = await api.post(`/api/v1/insights/total-cost/`, filter);
@@ -111,6 +118,7 @@ export const fetchTotalCost = async (filter: FilterBody) => {
   }
 };
 
+// Fetches tradeoff indicators by a time unit
 export const fetchTradeoffIndicatorsByTime = async (
   filter: FilterBody,
   item: number
@@ -126,6 +134,7 @@ export const fetchTradeoffIndicatorsByTime = async (
   }
 };
 
+// Fetches tradeoff indicators by a specific item
 export const fetchTradeoffIndicatorsByItem = async (
   filter: FilterBody,
   item: number
@@ -141,6 +150,7 @@ export const fetchTradeoffIndicatorsByItem = async (
   }
 };
 
+// Fetches keywords based on the provided filter criteria
 export const fetchKeywords = async (filter: FilterBody) => {
   try {
     const response = await api.post(`/api/v1/insights/keywords/`, filter);
@@ -150,6 +160,7 @@ export const fetchKeywords = async (filter: FilterBody) => {
   }
 };
 
+// Fetches common nouns from the API based on the filter criteria
 export const fetchCommonNouns = async (filter: FilterBody) => {
   try {
     const response = await api.post(`/api/v1/insights/common-nouns/`, filter);
@@ -159,6 +170,7 @@ export const fetchCommonNouns = async (filter: FilterBody) => {
   }
 };
 
+// Fetches common verbs from the API based on the filter criteria
 export const fetchCommonVerbs = async (filter: FilterBody) => {
   try {
     const response = await api.post(`/api/v1/insights/common-verbs/`, filter);
@@ -168,6 +180,7 @@ export const fetchCommonVerbs = async (filter: FilterBody) => {
   }
 };
 
+// Fetches common adjectives from the API based on the filter criteria
 export const fetchCommonAdjectives = async (filter: FilterBody) => {
   try {
     const response = await api.post(

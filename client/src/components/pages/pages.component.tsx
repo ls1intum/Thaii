@@ -1,17 +1,17 @@
 import { Button, Grid, Typography } from "@mui/material";
-import { SidebarParams } from "../sidebar/types/sidebar.types";
+import { SidebarParams } from "../../types/sidebar/sidebar.types";
 import { Edit } from "react-feather";
 import { lazy, Suspense, useEffect, useState } from "react";
 import CustomSnackbar from "../general/snackbar/snackbar.component";
 import { useToolStore } from "../../states/global.store";
-import { PageDTO } from "./types/pages.types";
 import { addPage, getPageById, getPages } from "../../services/pages.service";
 import CreationDialog from "../general/create-dialog/creation-dialog.component";
 import LoadingComponent from "../general/loading-component/loading.component";
 import { getChatsByPageId } from "../../services/chats.service";
 import { ChatDTO } from "../../types/chatbot/chatbot.types";
 import { useQuery } from "react-query";
-import EmptyChat from "../general/empty-chat/empty-chat.component";
+import EmptyChat from "../chatbot/empty-chat/empty-chat.component";
+import { PageDTO } from "../../types/page/page.types";
 const PageTitle = lazy(() => import("./page-title/page-title.component"));
 const ChatTable = lazy(() => import("./chat-table/chat-table.component"));
 const PageTreeView = lazy(

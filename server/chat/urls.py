@@ -15,5 +15,6 @@ urlpatterns= [
         name="chats",
     ),
     path("messages/<int:fk>/", views.MessageDetailView.as_view(), name="message"),
-    path("labels/", views.LabelApiView.as_view(), name="label-create")
+    path("labels/", views.LabelApiView.as_view(), name="label-create"),
+    path("labels/<int:pk>/", views.LabelApiView.as_view(), name="label-delete")
 ]

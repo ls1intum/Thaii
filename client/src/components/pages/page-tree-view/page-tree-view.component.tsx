@@ -8,8 +8,8 @@ import { useTreeViewApiRef } from "@mui/x-tree-view/hooks";
 import { SyntheticEvent, useEffect, useState } from "react";
 import { useToolStore } from "../../../states/global.store";
 import { Alert, Typography } from "@mui/material";
-import { PageDTO } from "../types/pages.types";
 import { getPageById } from "../../../services/pages.service";
+import { PageDTO } from "../../../types/page/page.types";
 
 function PageTreeView({
   currentPageId,

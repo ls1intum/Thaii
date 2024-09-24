@@ -1,5 +1,5 @@
-import { LabelDTO } from "../../../../types/chatbot/chatbot.types";
-import { TagDTO } from "../../../pages/types/pages.types";
+import { LabelDTO } from "../chatbot/chatbot.types";
+import { TagDTO } from "../page/page.types";
 
 export type CreationDialogParams = {
   open: boolean;
@@ -25,6 +25,8 @@ export type TagLabelListParams = {
   setCurrentElements: (currentElement: TagDTO[] | LabelDTO[]) => void;
   selectedTagsOrLabels: string[];
   setSelectedTagsOrLabels: (selectedTagOrLabel: string[]) => void;
+  fetchTagOrLabelData: () => void;
+  source: string;
 };
 
 export type TagLabelDialogParams = {

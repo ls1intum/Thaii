@@ -7,7 +7,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { SidebarParams } from "../sidebar/types/sidebar.types";
+import { SidebarParams } from "../../types/sidebar/sidebar.types";
 import AdminTitle from "./admin-title/admin-title.component";
 import { getUsers, getWhitelist } from "../../services/user.service";
 import { UserDTO, WhitelistDTO } from "../../types/register/register.types";

@@ -15,10 +15,9 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { CreationDialogParams } from "./types/creation-dialog.types";
+import { CreationDialogParams } from "../../../types/create-dialog/creation-dialog.types";
 import { PlusCircle, X } from "react-feather";
 import React, { lazy, Suspense, useEffect, useState } from "react";
-import { TagDTO } from "../../pages/types/pages.types";
 import { getTags } from "../../../services/tags.service";
 import { useToolStore } from "../../../states/global.store";
 import { LabelDTO } from "../../../types/chatbot/chatbot.types";
@@ -28,6 +27,7 @@ import { getLabels } from "../../../services/label.service";
 import LoadingComponent from "../loading-component/loading.component";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorBoundaryFallback from "../error-boundary/error-boundary.component";
+import { TagDTO } from "../../../types/page/page.types";
 const PageTreeView = lazy(
   () => import("../../pages/page-tree-view/page-tree-view.component")
 );
@@ -323,6 +323,8 @@ function CreationDialog({
                       setCurrentElements={setCurrentElements}
                       selectedTagsOrLabels={selectedTagOrLabel}
                       setSelectedTagsOrLabels={setSelectedTagOrLabel}
+                      fetchTagOrLabelData={fetchTagOrLabelData}
+                      source={source}
                     />
                   </Suspense>
                 </ErrorBoundary>

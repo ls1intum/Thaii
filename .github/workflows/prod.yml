@@ -16,4 +16,3 @@ jobs:
       environment: Production
       server_image_tag: "latest"
       client_image_tag: "latest"
-    

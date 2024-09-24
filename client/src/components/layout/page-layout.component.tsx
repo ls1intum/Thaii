@@ -1,8 +1,8 @@
 import { Grid } from "@mui/material";
 import Sidebar from "../sidebar/sidebar.component";
 import { Outlet } from "react-router-dom";
-import { SidebarParams } from "../sidebar/types/sidebar.types";
-import Footer from "../general/footer/footer.component";
+import { SidebarParams } from "../../types/sidebar/sidebar.types";
+import Footer from "../footer/footer.component";
 
 function PageLayout({ open, setOpen }: SidebarParams) {
   return (
