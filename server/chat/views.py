@@ -131,6 +131,7 @@ class LabelApiView(APIView):
     def delete(self, request, pk, format=None):
         try:
             label = Label.objects.get(id=pk)
+            label.chats.clear()
         except Label.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         label.delete()

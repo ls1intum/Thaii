@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TagLabelDialogParams } from "../types/creation-dialog.types";
+import { TagLabelDialogParams } from "../../../../types/create-dialog/creation-dialog.types";
 import { addTag } from "../../../../services/tags.service";
 import { TagBody } from "../../../pages/types/pages.types";
 import {

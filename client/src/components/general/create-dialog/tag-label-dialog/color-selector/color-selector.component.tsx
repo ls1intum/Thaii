@@ -1,5 +1,5 @@
 import { Avatar, Stack } from "@mui/material";
-import { ColorSelectorParams } from "../../types/creation-dialog.types";
+import { ColorSelectorParams } from "../../../../../types/create-dialog/creation-dialog.types";
 import { Check, Circle } from "react-feather";
 
 const colors = [

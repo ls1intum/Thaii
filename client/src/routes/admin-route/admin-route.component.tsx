@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getUserPermissions } from "../../../services/user.service";
-import { ACCESS_TOKEN } from "../../../helpers/auth.helpers";
 import { Navigate, Outlet } from "react-router-dom";
+import { ACCESS_TOKEN } from "../../helpers/auth.helpers";
+import { getUserPermissions } from "../../services/user.service";
 
 function AdminRoute() {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);

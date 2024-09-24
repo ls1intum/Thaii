@@ -1,4 +1,4 @@
-import { PageDTO } from "../../components/pages/types/pages.types";
+import { PageDTO } from "../page/page.types";
 
 export type LabelDTO = {
   id: string;

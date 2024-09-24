@@ -1,8 +1,15 @@
-import { Button, Typography, useTheme } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  Tooltip,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { getEventLogs } from "../../../services/interactions.service";
 import { Download } from "react-feather";
+import { DownloadButtonParams } from "../../../types/sidebar/sidebar.types";
 
-const DownloadButton = () => {
+const DownloadButton = ({ open }: DownloadButtonParams) => {
   const theme = useTheme();
 
   const handleDownload = async () => {
@@ -25,15 +32,25 @@ const DownloadButton = () => {
     }
   };
 
+  if (open) {
+    return (
+      <Button
+        variant="contained"
+        startIcon={<Download />}
+        sx={{ background: theme.palette.primary.dark, textTransform: "none" }}
+        onClick={handleDownload}
+      >
+        <Typography variant="body2">Download Data</Typography>
+      </Button>
+    );
+  }
+
   return (
-    <Button
-      variant="contained"
-      startIcon={<Download />}
-      sx={{ background: theme.palette.primary.dark, textTransform: "none" }}
-      onClick={handleDownload}
-    >
-      <Typography variant="body2">Download Data</Typography>
-    </Button>
+    <Tooltip title="Download Data" arrow placement="right">
+      <IconButton aria-label="delete">
+        <Download />
+      </IconButton>
+    </Tooltip>
   );
 };
 

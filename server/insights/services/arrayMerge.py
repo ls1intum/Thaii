@@ -1,3 +1,4 @@
+
 def mergeByDate(array1, array2, key):
     combined_dict = {}
     for obj in array1:

@@ -9,5 +9,6 @@ urlpatterns= [
     ),
     path("pages/", views.PageListView.as_view(), name="page-list"),
     path("pages/insights/", views.PageListFilterView.as_view(), name="page-list"),
-    path("tags/", views.TagApiView.as_view(), name="tag-create")
+    path("tags/", views.TagApiView.as_view(), name="tag-create"),
+    path("tags/<int:pk>/", views.TagApiView.as_view(), name="tag-delete")
 ]
